@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const EventContext = createContext();
@@ -15,6 +15,11 @@ const EvnProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    setUsers(storedUsers);
+  }, []);
+
   const handleChange = (e) => {
     setUser((prevUser) => ({
       ...prevUser,
@@ -24,7 +29,6 @@ const EvnProvider = ({ children }) => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-
     setError("");
 
     const userExists = users.some((u) => u.email === user.email);
@@ -45,13 +49,16 @@ const EvnProvider = ({ children }) => {
       id: Date.now(),
     };
 
-    setUsers([...users, newUser]);
+    const updatedUsers = [...users, newUser];
+    setUsers(updatedUsers);
+
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
 
     setUser({ username: "", email: "", password: "" });
 
-    localStorage.setItem("user", JSON.stringify(newUser));
     navigate("/login");
   };
+
   const handleLoginRegisterToggle = () => {
     const currentPath = window.location.pathname;
     navigate(currentPath === "/login" ? "/register" : "/login");
