@@ -16,8 +16,11 @@ const EvnProvider = ({ children }) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
-    setUsers(storedUsers);
+    if (token && storedUsers) {
+      setUsers(storedUsers);
+    }
   }, []);
 
   const handleChange = (e) => {
@@ -56,13 +59,42 @@ const EvnProvider = ({ children }) => {
 
     setUser({ username: "", email: "", password: "" });
 
-    navigate("/login");
+    navigate("/signin");
   };
 
   const handleLoginRegisterToggle = () => {
     const currentPath = window.location.pathname;
-    navigate(currentPath === "/login" ? "/register" : "/login");
+    navigate(currentPath === "/signin" ? "/register" : "/signin");
   };
+
+  // Sign in an existing user
+  const handleSignIn = (formData) => {
+    setError("");
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const foundUser = users.find(
+      (u) => u.email === formData.email && u.password === formData.password
+    );
+    if (!foundUser) {
+      setError("Invalid email or password!");
+      return false;
+    }
+    
+    // Create a simple token (in production, use a more secure method) 
+    const token = btoa(foundUser.email + ":" + Date.now());
+    localStorage.setItem("token", token);
+    localStorage.setItem("users", JSON.stringify(foundUser));
+    setUsers(foundUser);
+    navigate("/");
+    return true;
+  };
+
+  // Sign out current user
+  const handleSignout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("users");
+    setUsers("");
+    navigate("/signin");
+  }
 
   return (
     <EventContext.Provider
@@ -70,6 +102,8 @@ const EvnProvider = ({ children }) => {
         handleLoginRegisterToggle,
         handleChange,
         handleRegister,
+        handleSignIn,
+        handleSignout,
         user,
         users,
         error,

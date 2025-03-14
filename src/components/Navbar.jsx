@@ -29,10 +29,10 @@ function Navbar() {
           SignUp
         </Link>
         <Link
-          to="/login"
+          to="/signin"
           className="rounded-md px-3 pb-[3px] bg-[#ff2424] text-[#ffead7]"
         >
-          Login
+          Sign In
         </Link>
       </div>
     </nav>
