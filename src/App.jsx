@@ -4,6 +4,7 @@ import MainTemplate from "./layout/MainTemplate";
 import Home from "./pages/Home";
 import CreateEvent from "./pages/CreateEvent";
 import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="createEvent" element={<CreateEvent />} />
             <Route path="signup" element={<SignUp />} />
+            <Route path="signin" element={<SignIn />} />
           </Route>
         </Routes>
       </EvnProvider>
