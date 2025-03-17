@@ -6,7 +6,7 @@ const EventDetail = () => {
   const [eventDetail, setEventDetail] = useState(null);
 
   useEffect(() => {
-    const events = JSON.parse(localStorage.getItem("events")) || [];
+    const events = JSON.parse(localStorage.getItem("event")) || [];
     const foundEvent = events.find((ev) => String(ev.id) === id);
     setEventDetail(foundEvent);
   }, [id]);
@@ -19,26 +19,29 @@ const EventDetail = () => {
           Back to Home
         </Link>
       </div>
-    )
+    );
   }
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-5 border-[#ff9696] rounded-md shadow-md">
       <h2 className="text-2xl font-bold mb-4">{eventDetail.title}</h2>
       <p className="mb-2">
-        <span className="font-semibold">Description: </span>{eventDetail.description}
+        <span className="font-semibold">Description: </span>
+        {eventDetail.description}
       </p>
       <p className="mb-2">
-        <span className="font-semibold">Date: </span>{eventDetail.date}
+        <span className="font-semibold">Date: </span>
+        {eventDetail.date}
       </p>
       <p className="mb-2">
-        <span className="font-semibold">Location: </span>{eventDetail.location}
+        <span className="font-semibold">Location: </span>
+        {eventDetail.location}
       </p>
       <Link to="/" className="mt-4 inline-block text-[#a60000] underline">
         Back to Home
       </Link>
     </div>
-  )
-}
+  );
+};
 
-export default EventDetail
+export default EventDetail;

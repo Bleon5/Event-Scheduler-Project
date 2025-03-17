@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 const EventContext = createContext();
 
 const useEvn = () => useContext(EventContext);
@@ -14,10 +13,14 @@ const EvnProvider = ({ children }) => {
   });
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
+  const [event, setEvent] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    const storedEvents = JSON.parse(localStorage.getItem("event")) || [];
+    setEvent(storedEvents);
+    console.log("Stored Events:", storedEvents);
     if (token && storedUsers) {
       setUsers(storedUsers);
     }
@@ -78,8 +81,8 @@ const EvnProvider = ({ children }) => {
       setError("Invalid email or password!");
       return false;
     }
-    
-    // Create a simple token (in production, use a more secure method) 
+
+    // Create a simple token (in production, use a more secure method)
     const token = btoa(foundUser.email + ":" + Date.now());
     localStorage.setItem("token", token);
     localStorage.setItem("users", JSON.stringify(foundUser));
@@ -94,7 +97,7 @@ const EvnProvider = ({ children }) => {
     localStorage.removeItem("users");
     setUsers("");
     navigate("/signin");
-  }
+  };
 
   return (
     <EventContext.Provider
@@ -107,6 +110,8 @@ const EvnProvider = ({ children }) => {
         user,
         users,
         error,
+        event,
+        setEvent,
       }}
     >
       {children}
