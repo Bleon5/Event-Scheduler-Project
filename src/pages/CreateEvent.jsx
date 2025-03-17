@@ -1,5 +1,5 @@
-import { useEffect,useState } from "react"
-import { data } from "react-router-dom";
+import { useState } from "react"
+import { useEvn } from "../context/EventContext";
 
 function CreateEvent() {
 
@@ -7,19 +7,14 @@ function CreateEvent() {
     title:"",
     description:"",
     date:"",
-    location:""
+    location:"",
   });
 
-  const [event,setEvent] = useState([]);
+  const {event} = useEvn();
 
   const handleChangeInput = (e) => {
     setFormData({...formData , [e.target.name]: e.target.value});
   }
-
-  useEffect(() => {
-    const localEvent = JSON.parse(localStorage.getItem("event")) || [];
-    setEvent(localEvent); 
-  },[]);
   
   const submitForm = (e) => {
     e.preventDefault();
@@ -28,8 +23,9 @@ function CreateEvent() {
       return;
     }
     else{
-      event.push(formData);
-      console.log(event)
+      const newFormdata = {...formData, id: Date.now().toString()};
+      setFormData(newFormdata);
+      event.push(newFormdata);
       localStorage.setItem("event", JSON.stringify(event));
 
       setFormData({

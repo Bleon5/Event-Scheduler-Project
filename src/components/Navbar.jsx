@@ -1,6 +1,9 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom"
+import { useEvn } from "../context/EventContext";
 
 function Navbar() {
+  const {token,isLoggedIn} = useEvn();
+
   return (
     <nav className="flex justify-between px-6 items-center h-[10vh]">
       <ul className="flex list-none gap-7 p-5">
@@ -12,7 +15,8 @@ function Navbar() {
             Home
           </NavLink>
         </li>
-        <li>
+        {token && isLoggedIn &&
+          <li>
           <NavLink
             to="/createEvent"
             className={({ isActive }) => (isActive ? "selected-link" : "")}
@@ -20,6 +24,7 @@ function Navbar() {
             Create Event
           </NavLink>
         </li>
+        }
       </ul>
       <div className="flex gap-5">
         <Link
