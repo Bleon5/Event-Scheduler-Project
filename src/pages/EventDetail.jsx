@@ -24,20 +24,20 @@ const EventDetail = () => {
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-5 border-[#ff9696] rounded-md shadow-md">
-      <h2 className="text-2xl font-bold mb-4">{eventDetail.title}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-[#5a5a5a]">{eventDetail.title}</h2>
       <p className="mb-2">
         <span className="font-semibold">Description: </span>
         {eventDetail.description}
       </p>
       <p className="mb-2">
-        <span className="font-semibold">Date: </span>
+        <span className="font-semibold text-[#5a5a5a]">Date: </span>
         {eventDetail.date}
       </p>
       <p className="mb-2">
-        <span className="font-semibold">Location: </span>
+        <span className="font-semibold text-[#5a5a5a]">Location: </span>
         {eventDetail.location}
       </p>
-      <Link to="/" className="mt-4 inline-block text-[#a60000] underline">
+      <Link to="/" className="mt-4 inline-block text-[#ff2424] underline">
         Back to Home
       </Link>
     </div>
