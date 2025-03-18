@@ -5,18 +5,18 @@ function Home() {
   const { event, setEvent } = useEvn();
 
   return (
-    <div>
-      <h1>Events</h1>
-      <div className="flex gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4
+       gap-5">
         {event.length > 0 ? (
           event.map((ev) => (
-            <div key={ev.id} className="border w-1/2">
-              <h1 className="text-red-500 text-2xl text-center">{ev.title}</h1>
-              <p className="text-xl">{ev.description}</p>
-              <p className="text-xl">{ev.location}</p>
-              <p className="text-sm">{ev.date}</p>
+            <div key={ev.id} className="border-2 border-[#ff9696] rounded-md
+               shadow-lg bg-[#fff1e3]">
+              <h1 className="text-red-500 text-xl text-center p-3">{ev.title}</h1>
+              <p className="p-3 h-[210px] overflow-hidden text-justify mb-3">{ev.description}</p>
+              <p className="px-3">{ev.location}</p>
+              <p className="text-sm px-3">{ev.date}</p>
               <Link to={`/event/${ev.id}`}>
-                <button className="border bg-green-500 text-white p-2 w-full mt-5">
+                <button className="border bg-[#ff2424] text-[#ffead7] p-2 w-full mt-5 cursor-pointer">
                   View Event
                 </button>
               </Link>
@@ -26,7 +26,6 @@ function Home() {
           <p>No events found.</p>
         )}
       </div>
-    </div>
   );
 }
 
