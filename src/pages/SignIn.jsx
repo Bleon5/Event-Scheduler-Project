@@ -15,35 +15,37 @@ const SignIn = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-5 border rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold mb-5 text-center">Sign In</h2>
+    <div className="border-2 border-[#ff9696] w-[70%] mx-auto rounded-md p-3
+     flex items-center flex-col shadow-lg">
+      <h2 className="text-2xl font-semibold mb-5">Sign In</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label  className="block text-sm font-medium mb-1">Email</label>
+        <div className="flex items-center my-4">
+          <label className="block text-sm font-medium mr-6.5">Email: </label>
           <input 
             type="email" 
             name="email" 
             value={formData.email}
             onChange={handleChangeInput}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="p-2 rounded-md bg-[#fcebda] border-2 border-[#ff9696] shadow-md ml-3 text-[#a60000]"
             placeholder="Enter your email" 
           />
         </div>
-        <div className="mb-4">
-          <label  className="block text-sm font-medium mb-1">Password</label>
+        <div className="flex items-center my-4">
+          <label className="block text-sm font-medium">Password: </label>
           <input 
             type="password" 
             name="password" 
             value={formData.password}
             onChange={handleChangeInput}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="p-2 rounded-md bg-[#fcebda] border-2 border-[#ff9696] shadow-md ml-3 text-[#a60000]"
             placeholder="Enter your password" 
           />
         </div>
         {error && <div className="mb-4 text-red-500 text-sm">{error}</div>}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
+          className="cursor-pointer rounded-md m-4 px-[7px] pb-[4px] pt-[2px] bg-[#ff2424] text-[#ffead7] border-2 border-[#ff2424]
+           hover:bg-[#ffead7] hover:border-[#ff2424] hover:text-[#ff2424] transition-all duration-300 ease-in"
         >
           Sign In
         </button>

@@ -14,15 +14,19 @@ const EvnProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
   const [event, setEvent] = useState([]);
+  const [token,setToken] = useState("");
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const getToken = localStorage.getItem("token");
+    setToken(getToken);
     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
     const storedEvents = JSON.parse(localStorage.getItem("event")) || [];
     setEvent(storedEvents);
     console.log("Stored Events:", storedEvents);
-    if (token && storedUsers) {
+    if (getToken && storedUsers) {
       setUsers(storedUsers);
+      setIsLoggedIn(true)
     }
   }, []);
 
@@ -79,16 +83,18 @@ const EvnProvider = ({ children }) => {
     );
     if (!foundUser) {
       setError("Invalid email or password!");
-      return false;
+      setIsLoggedIn(false);
     }
 
     // Create a simple token (in production, use a more secure method)
-    const token = btoa(foundUser.email + ":" + Date.now());
-    localStorage.setItem("token", token);
+    const newToken = btoa(foundUser.email + ":" + Date.now());
+    setToken(newToken);
+
+    localStorage.setItem("token", newToken);
     localStorage.setItem("users", JSON.stringify(foundUser));
     setUsers(foundUser);
     navigate("/");
-    return true;
+    setIsLoggedIn(true);
   };
 
   // Sign out current user
@@ -96,6 +102,7 @@ const EvnProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("users");
     setUsers("");
+    setIsLoggedIn(false);
     navigate("/signin");
   };
 
@@ -111,6 +118,8 @@ const EvnProvider = ({ children }) => {
         users,
         error,
         event,
+        token,
+        isLoggedIn,
         setEvent,
       }}
     >
