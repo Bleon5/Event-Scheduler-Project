@@ -12,6 +12,7 @@ const EvnProvider = ({ children }) => {
     password: "",
   });
   const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
   const [error, setError] = useState("");
   const [event, setEvent] = useState([]);
   const [token, setToken] = useState("");
@@ -22,10 +23,12 @@ const EvnProvider = ({ children }) => {
     setToken(getToken);
     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
     const storedEvents = JSON.parse(localStorage.getItem("event")) || [];
+    const storedCurrentUser = JSON.parse(localStorage.getItem("currentUser"));
     setEvent(storedEvents);
     console.log("Stored Events:", storedEvents);
     if (getToken && storedUsers) {
       setUsers(storedUsers);
+      setCurrentUser(storedCurrentUser);
       setIsLoggedIn(true);
     }
   }, []);
@@ -84,6 +87,7 @@ const EvnProvider = ({ children }) => {
     if (!foundUser) {
       setError("Invalid email or password!");
       setIsLoggedIn(false);
+      return;
     }
 
     // Create a simple token (in production, use a more secure method)
@@ -91,16 +95,16 @@ const EvnProvider = ({ children }) => {
     setToken(newToken);
 
     localStorage.setItem("token", newToken);
-    localStorage.setItem("users", JSON.stringify(foundUser));
+    localStorage.setItem("currentUser", JSON.stringify(foundUser));
     setUsers(foundUser);
-    navigate("/");
     setIsLoggedIn(true);
+    navigate("/");
   };
 
   // Sign out current user
   const handleSignout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("users");
+    localStorage.removeItem("currentUser");
     setUsers("");
     setIsLoggedIn(false);
     navigate("/signin");
@@ -122,6 +126,7 @@ const EvnProvider = ({ children }) => {
         handleSignout,
         user,
         users,
+        currentUser,
         error,
         event,
         token,
