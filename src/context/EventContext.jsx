@@ -101,15 +101,6 @@ const EvnProvider = ({ children }) => {
     navigate("/");
   };
 
-  // Sign out current user
-  const handleSignout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("currentUser");
-    setUsers("");
-    setIsLoggedIn(false);
-    navigate("/signin");
-  };
-
   const handleDelete = (id) => {
     const filteredEvents = event.filter((ev) => ev.id !== id);
     setEvent(filteredEvents);
@@ -123,7 +114,6 @@ const EvnProvider = ({ children }) => {
         handleChange,
         handleRegister,
         handleSignIn,
-        handleSignout,
         user,
         users,
         currentUser,

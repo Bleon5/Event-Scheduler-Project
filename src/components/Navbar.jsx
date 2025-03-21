@@ -2,8 +2,16 @@ import { NavLink, Link } from "react-router-dom"
 import { useEvn } from "../context/EventContext";
 
 function Navbar() {
-  const {token,isLoggedIn} = useEvn();
-
+  const {token,isLoggedIn,setIsLoggedIn,navigate} = useEvn();
+  
+  // Sign out current user
+  const handleSignout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    localStorage.removeItem("currentUser");
+    navigate("/signin");
+  };
+  
   return (
     <nav className="flex justify-between px-6 items-center h-[10vh]">
       <ul className="flex list-none gap-7 p-5">
@@ -27,18 +35,26 @@ function Navbar() {
         }
       </ul>
       <div className="flex gap-5">
+        {!token && !isLoggedIn && 
         <Link
           to="/signup"
           className="rounded-md px-3 pb-[3px] bg-[#4524ff] text-[#ffead7]"
         >
           SignUp
-        </Link>
-        <Link
+        </Link> }
+        {token && isLoggedIn ? 
+          (<Link
+          onClick={() => handleSignout()}
+          className="rounded-md px-3 pb-[3px] bg-[#ff2424] text-[#ffead7]"
+        >
+          Sign Out
+        </Link>)
+         : (<Link
           to="/signin"
           className="rounded-md px-3 pb-[3px] bg-[#ff2424] text-[#ffead7]"
         >
           Sign In
-        </Link>
+        </Link>)}
       </div>
     </nav>
   );
