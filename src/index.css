@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+body{
+    background: url(../src/images/body-bg.png) no-repeat;
+    background-position: top;
+    background-size: cover;
+    height: 100vh;
+    color: #696969;
+}
+
+nav li a{
+    color: #5e5e5e;
+    font-weight: bold;
+}
+
+.selected-link{
+    color: #ff2525;
+}
