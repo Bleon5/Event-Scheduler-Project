@@ -14,8 +14,8 @@ const EvnProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
   const [event, setEvent] = useState([]);
-  const [token,setToken] = useState("");
-  const [isLoggedIn,setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const getToken = localStorage.getItem("token");
@@ -26,7 +26,7 @@ const EvnProvider = ({ children }) => {
     console.log("Stored Events:", storedEvents);
     if (getToken && storedUsers) {
       setUsers(storedUsers);
-      setIsLoggedIn(true)
+      setIsLoggedIn(true);
     }
   }, []);
 
@@ -106,6 +106,12 @@ const EvnProvider = ({ children }) => {
     navigate("/signin");
   };
 
+  const handleDelete = (id) => {
+    const filteredEvents = event.filter((ev) => ev.id !== id);
+    setEvent(filteredEvents);
+    localStorage.setItem("event", JSON.stringify(filteredEvents));
+  };
+
   return (
     <EventContext.Provider
       value={{
@@ -121,6 +127,7 @@ const EvnProvider = ({ children }) => {
         token,
         isLoggedIn,
         setEvent,
+        handleDelete,
       }}
     >
       {children}
