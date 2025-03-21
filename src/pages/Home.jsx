@@ -11,10 +11,10 @@ function Home() {
         event.map((ev) => (
           <div
             key={ev.id}
-            className="relative border-2 border-[#ff9696] rounded-md shadow-lg bg-[#fff1e3] p-4"
+            className="relative border-2 border-[#ff9696] rounded-md shadow-lg bg-[#fff1e3]"
           >
             <button
-              className="absolute top-2 right-2 bg-red-600 text-white p-3 rounded-full hover:bg-red-700 transition cursor-pointer "
+              className="absolute text-sm top-2 right-2 bg-red-700 text-white p-2 rounded-full hover:bg-red-800 transition cursor-pointer "
               onClick={() => handleDelete(ev.id)}
             >
               <FaTrash />
@@ -28,7 +28,7 @@ function Home() {
 
             {/* View Event Button */}
             <Link to={`/event/${ev.id}`}>
-              <button className="border bg-[#75c565] text-[#ffead7]  hover:bg-green-700 transition  p-2 w-full mt-5 cursor-pointer">
+              <button className="border bg-[#ff4c4c] text-[#ffead7]  hover:bg-[#ff3030] transition  p-2 w-full mt-5 cursor-pointer">
                 View Event
               </button>
             </Link>
